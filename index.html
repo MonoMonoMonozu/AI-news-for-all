@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>みんなのAIニュース — Echo / Sonar / Racco</title>
+<title>みんなのAIニュース — Echo / Lucky / Sonar</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
 
@@ -115,15 +115,15 @@ main{max-width:620px;margin:0 auto;padding:1rem 1rem 5rem;}
     <div class="echo-avatar" id="echoAvatar">🦭</div>
     <div class="header-text">
       <h1>みんなのAIニュース</h1>
-      <p id="chLabel">経済新聞モード · Echo</p>
+      <p id="chLabel">今日のAI · Echo</p>
     </div>
     <div class="header-right">
       <button class="policy-btn" onclick="showPolicy()">📋 取材ポリシー</button>
     </div>
   </div>
   <div class="ch-tabs">
-    <div class="ch-tab active" data-ch="nikkei" onclick="switchCh('nikkei',this)">📰 経済新聞</div>
-    <div class="ch-tab" data-ch="tech"   onclick="switchCh('tech',this)">💻 テック雑誌</div>
+    <div class="ch-tab active" data-ch="nikkei" onclick="switchCh('nikkei',this)">📰 今日のAI</div>
+    <div class="ch-tab" data-ch="tech"   onclick="switchCh('tech',this)">🛠️ ユーザーボイス</div>
     <div class="ch-tab" data-ch="gossip" onclick="switchCh('gossip',this)">👀 御三家動向</div>
   </div>
 </header>
@@ -163,23 +163,23 @@ main{max-width:620px;margin:0 auto;padding:1rem 1rem 5rem;}
     <p><strong>更新タイミング</strong><br>
     チャンネル・リージョン切替時、または「🔄 更新」ボタンを押したとき。AIが要約・整理しているので原文と若干ズレることも。感覚的な情報収集ツールとして使ってね。</p>
     <p><strong>キャラクター</strong><br>
-    📰 Echo 🦭（経済新聞）/ 💻 Racco 🦝（テック雑誌）/ 👀 Sonar 🐬（御三家動向）</p>
+    📰 Echo 🦭（今日のAI）/ 🛠️ Lucky 🦝（ユーザーボイス）/ 👀 Sonar 🐬（御三家動向）</p>
     <button class="modal-close" onclick="hidePolicy()">閉じる</button>
   </div>
 </div>
 
 <script>
 const CFG = {
-  nikkei:{label:'経済新聞モード · Echo',  avatar:'🦭',name:'Echo',
+  nikkei:{label:'今日のAI · Echo',  avatar:'🦭',name:'Echo',
     intro:'探知したよ📡 今朝の<strong>ビジネス×AIトレンド</strong>をお届け。どれから聞く？',
     role:'経済・ビジネス視点でAIニュースを解説する。格調高く、でも分かりやすく。',
     qWorld:'AI artificial intelligence business economics latest news 2026 April',
     qJapan:'AI 人工知能 ビジネス 経済 日本 国内 最新ニュース 2026年4月'},
-  tech:{label:'テック雑誌モード · Racco',avatar:'🦝',name:'Racco',
-    intro:'よっ！📟 今週の<strong>使えるAIネタ</strong>まとめてきたよ。気になるやつある？',
-    role:'エンジニアや技術好きに向けて実用・具体的にAIニュースを解説する。',
-    qWorld:'AI new model release developer tools technology 2026 April',
-    qJapan:'AI 新モデル エンジニア 開発 ツール 技術 日本 2026年4月'},
+  tech:{label:'ユーザーボイス · Lucky',avatar:'🦝',name:'Lucky',
+    intro:'ラッキー探知！🦝 <strong>現場・ユーザーの声</strong>を集めてきたよ。どれ気になる？',
+    role:'AIを実際に使っているユーザーや現場の声・活用事例・使ってみた報告を親しみやすく伝える。',
+    qWorld:'AI user experience productivity real world use case how people use 2026',
+    qJapan:'AI 活用事例 使ってみた ユーザー 現場 業務効率 日本 2026年4月'},
   gossip:{label:'御三家動向モード · Sonar',avatar:'🐬',name:'Sonar',
     intro:'探知したよ👀 <strong>OpenAI・Anthropic・Google</strong>の最新動向、全部まとめてきた！',
     role:'OpenAI・Anthropic・Google（御三家）の動向に特化して、面白く・人間臭く解説する。',
