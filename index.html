@@ -267,8 +267,17 @@ JSONのみ返してください（前置き・コードブロック不要）:
     if(data.error){loading=false;renderErr(data.error.message);return;}
     const tb=data.content?.find(b=>b.type==='text');
     const raw=tb?.text||'[]';
-    const m=raw.replace(/```json|```/g,'').trim().match(/\[[\s\S]*\]/);
-    fetchedNews=m?JSON.parse(m[0]):[];
+    try{
+      const clean=raw.replace(/```json|```/g,'').trim();
+      const arr=clean.match(/\[[\s\S]*\]/);
+      const jsonStr=arr?arr[0]:clean;
+      fetchedNews=JSON.parse(jsonStr);
+    }catch(pe){
+      const hits=[...raw.matchAll(/"title"\s*:\s*"([^"]+)"/g)];
+      fetchedNews=hits.length
+        ?hits.map(h=>({title:h[1],tags:['AI'],bg:'詳細はチャットで確認できます。',src:'web',age:'本日'}))
+        :[{title:'再読み込みを試してみてね 🔄',tags:['AI'],bg:'-',src:'-',age:'-'}];
+    }
     loading=false; renderContent();
   }catch(e){loading=false;renderErr(e.message);}
 }
