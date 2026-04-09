@@ -229,7 +229,7 @@ async function fetchNews(){
   const q=region==='japan'?c.qJapan:c.qWorld;
   const regionHint=region==='japan'?'日本・国内のニュースを優先してください。':'グローバルのニュースを中心にしてください。';
   const prompt=`${regionHint}
-以下の検索クエリで今日（2026年4月9日）のAIニュースを検索して、上位6件を日本語でまとめてください。
+以下の検索クエリで今日（2026年4月9日）のAIニュースを検索して、上位5件を日本語でまとめてください。タイトルは30字以内、bgは1文で簡潔に。
 
 検索クエリ: ${q}
 
@@ -243,18 +243,27 @@ JSONのみ返してください（前置き・コードブロック不要）:
     "age": "本日 or 1日前 など"
   }
 ]`;
-  try{
+  const doFetch=async()=>{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,
         'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:2000,
+        model:'claude-sonnet-4-20250514',max_tokens:800,
         tools:[{type:'web_search_20250305',name:'web_search'}],
         messages:[{role:'user',content:prompt}]
       })
     });
-    const data=await res.json();
+    return res.json();
+  };
+  try{
+    let data=await doFetch();
+    if(data.error&&data.error.message&&data.error.message.includes('rate limit')){
+      const el=document.querySelector('.fetch-state p');
+      if(el)el.textContent='レート制限中… 5秒後に再試行するよ';
+      await new Promise(r=>setTimeout(r,5000));
+      data=await doFetch();
+    }
     if(data.error){loading=false;renderErr(data.error.message);return;}
     const tb=data.content?.find(b=>b.type==='text');
     const raw=tb?.text||'[]';
